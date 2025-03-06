@@ -1,0 +1,47 @@
+package Intl_BBI_EmployeeBgv.EmployeeVerification.Controller;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Service.LoginService;
+
+@RestController
+@RequestMapping("/user-login")
+public class LoginController {
+
+    @Autowired
+    private LoginService loginService;
+
+    // Create a new user
+    @PostMapping(value = "/addUser")
+    public ResponseEntity<UserLoginTable> createUser(@RequestBody UserLoginTable userLoginTable) {
+        return ResponseEntity.ok(loginService.createUser(userLoginTable));
+    }
+
+
+    // Fetch all users
+    @GetMapping("/getUsers")
+    public ResponseEntity<List<UserLoginTable>> fetchUsers() {
+        List<UserLoginTable> users = loginService.fetchUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    // Update user role and password
+    @PutMapping("/update/{userId}")
+    public ResponseEntity<UserLoginTable> updateRole(@PathVariable Long userId, @RequestBody UserLoginTable userLoginTable) {
+        UserLoginTable updatedUser = loginService.updateRole(userId, userLoginTable);
+        return ResponseEntity.ok(updatedUser);
+    }
+
+    //  Update specific fields dynamically (email, password, role, isActive)
+    @PatchMapping("/update-fields/{userId}")
+    public ResponseEntity<UserLoginTable> updateUserFields(@PathVariable Long userId, @RequestBody Map<String, Object> updates) {
+        UserLoginTable updatedUser = loginService.updateUserFields(userId, updates);
+        return ResponseEntity.ok(updatedUser);
+    }
+}

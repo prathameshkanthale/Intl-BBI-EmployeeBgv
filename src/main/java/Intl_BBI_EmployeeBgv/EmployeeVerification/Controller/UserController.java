@@ -1,12 +1,12 @@
 package Intl_BBI_EmployeeBgv.EmployeeVerification.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserDetailsRequest;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.User;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +15,11 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     // ✅ Get all users
     @GetMapping
@@ -24,7 +27,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
-    // ✅ Get single user
+    // ✅ Get a single user
     @GetMapping("/{userId}")
     public ResponseEntity<User> getUserById(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getUserById(userId));
@@ -49,14 +52,14 @@ public class UserController {
         return ResponseEntity.ok("User deleted successfully.");
     }
 
-    // ✅ Upload file (ProfilePhoto, Resume, AadharProof)
+    // ✅ Upload any document (ProfilePhoto, Resume, AadharProof, etc.)
     @PostMapping("/{userId}/upload/{type}")
     public ResponseEntity<String> uploadFile(@PathVariable Long userId, @PathVariable String type,
                                              @RequestParam("file") MultipartFile file) throws IOException {
         return ResponseEntity.ok(userService.uploadFile(userId, type, file));
     }
 
-    // ✅ Retrieve files as Base64
+    // ✅ Retrieve file URL
     @GetMapping("/{userId}/file/{type}")
     public ResponseEntity<String> getFileUrl(@PathVariable Long userId, @PathVariable String type) {
         return ResponseEntity.ok(userService.getFileUrl(userId, type));

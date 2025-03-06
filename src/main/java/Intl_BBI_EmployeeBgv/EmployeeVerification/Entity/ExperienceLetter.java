@@ -1,15 +1,12 @@
 package Intl_BBI_EmployeeBgv.EmployeeVerification.Entity;
 
 import jakarta.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
 import java.util.UUID;
 
 @Entity
-public class AadharProof {
+public class ExperienceLetter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,17 +15,19 @@ public class AadharProof {
 
     @Lob
     @JsonIgnore
-    private byte[] aadharData;
+    private byte[] experienceLetterData;
 
+    
+    @JsonIgnore 
     @OneToOne
     @JoinColumn(name = "detail_id", referencedColumnName = "detailId", unique = true, nullable = false)
     @JsonBackReference
     private User user;
 
-    public AadharProof() {}
+    public ExperienceLetter() {}
 
-    public AadharProof(byte[] aadharData, User user) {
-        this.aadharData = aadharData;
+    public ExperienceLetter(byte[] experienceLetterData, User user) {
+        this.experienceLetterData = experienceLetterData;
         this.user = user;
     }
 
@@ -36,12 +35,12 @@ public class AadharProof {
         return fileId;
     }
 
-    public byte[] getAadharData() {
-        return aadharData;
+    public byte[] getExperienceLetterData() {
+        return experienceLetterData;
     }
 
-    public void setAadharData(byte[] aadharData) {
-        this.aadharData = aadharData;
+    public void setExperienceLetterData(byte[] experienceLetterData) {
+        this.experienceLetterData = experienceLetterData;
     }
 
     public User getUser() {

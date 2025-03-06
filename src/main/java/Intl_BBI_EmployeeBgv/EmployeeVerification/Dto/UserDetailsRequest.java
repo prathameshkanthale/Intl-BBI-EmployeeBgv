@@ -1,12 +1,14 @@
 package Intl_BBI_EmployeeBgv.EmployeeVerification.Dto;
 
-import java.util.List;
+import java.util.Set;
 import org.springframework.web.multipart.MultipartFile;
 
 public class UserDetailsRequest {
-    private String name;
+
+    private Long userId;  // Required for updates
+    private String FirstName;
+    private String LastName;
     private int age;
-    private String email;
     private String phone;
     private String address;
     private String education;
@@ -16,25 +18,38 @@ public class UserDetailsRequest {
     private String passportId;
     private String pfId;
     private String panNo;
-    
+
+    // File uploads
     private MultipartFile profilePhotoFile;
     private MultipartFile aadharProofFile;
     private MultipartFile resumeFile;
-    
-    private List<String> skillNames;
+    private MultipartFile tenthMarksheetFile;
+    private MultipartFile twelfthMarksheetFile;
+    private MultipartFile diplomaMarksheetFile;
+    private MultipartFile graduationMarksheetFile;
+    private MultipartFile postGraduationMarksheetFile;
+    private MultipartFile experienceLetterFile;
 
-    // Default Constructor
-    public UserDetailsRequest() { }
+    // Skill Handling
+    private Set<String> skillNames;  // Storing skill names as Strings, can be converted to Skill objects later
+
+    
+
+    // Constructors
+    public UserDetailsRequest() {}
 
     // Getters & Setters
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public Long getUserId() { return userId; }
+    public void setUserId(Long userId) { this.userId = userId; }
+
+    public String getFirstName() { return FirstName; }
+    public void setFirstName(String FirstName) { this.FirstName= FirstName; }
+    
+    public String getLastName() { return LastName; }
+    public void setLastName(String LastName) { this.LastName= LastName; }
 
     public int getAge() { return age; }
     public void setAge(int age) { this.age = age; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
 
     public String getPhone() { return phone; }
     public void setPhone(String phone) { this.phone = phone; }
@@ -72,6 +87,27 @@ public class UserDetailsRequest {
     public MultipartFile getResumeFile() { return resumeFile; }
     public void setResumeFile(MultipartFile resumeFile) { this.resumeFile = resumeFile; }
 
-    public List<String> getSkillNames() { return skillNames; }
-    public void setSkillNames(List<String> skillNames) { this.skillNames = skillNames; }
+    public MultipartFile getTenthMarksheetFile() { return tenthMarksheetFile; }
+    public void setTenthMarksheetFile(MultipartFile tenthMarksheetFile) { this.tenthMarksheetFile = tenthMarksheetFile; }
+
+    public MultipartFile getTwelfthMarksheetFile() { return twelfthMarksheetFile; }
+    public void setTwelfthMarksheetFile(MultipartFile twelfthMarksheetFile) { this.twelfthMarksheetFile = twelfthMarksheetFile; }
+
+    public MultipartFile getDiplomaMarksheetFile() { return diplomaMarksheetFile; }
+    public void setDiplomaMarksheetFile(MultipartFile diplomaMarksheetFile) { this.diplomaMarksheetFile = diplomaMarksheetFile; }
+
+    public MultipartFile getGraduationMarksheetFile() { return graduationMarksheetFile; }
+    public void setGraduationMarksheetFile(MultipartFile graduationMarksheetFile) { this.graduationMarksheetFile = graduationMarksheetFile; }
+
+    public MultipartFile getPostGraduationMarksheetFile() { return postGraduationMarksheetFile; }
+    public void setPostGraduationMarksheetFile(MultipartFile postGraduationMarksheetFile) { this.postGraduationMarksheetFile = postGraduationMarksheetFile; }
+
+    public MultipartFile getExperienceLetterFile() { return experienceLetterFile; }
+    public void setExperienceLetterFile(MultipartFile experienceLetterFile) { this.experienceLetterFile = experienceLetterFile; }
+
+    public Set<String> getSkillNames() { return skillNames; }
+    public void setSkillNames(Set<String> skillNames) { this.skillNames = skillNames; }
+
+    
+   
 }

@@ -20,7 +20,7 @@ public class ProfilePhoto {
    
     private String fileId = UUID.randomUUID().toString();
     @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "userId", unique = true, nullable = false)
+    @JoinColumn(name = "detail_id", referencedColumnName = "detailId", unique = true, nullable = false)
     @JsonBackReference
     private User user;
 

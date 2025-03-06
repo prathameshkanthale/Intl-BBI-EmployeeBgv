@@ -3,22 +3,20 @@ package Intl_BBI_EmployeeBgv.EmployeeVerification.Entity;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
+@Table(name = "User")
 public class User {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
-    
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long detailId;
+
+
     @Column(nullable = false)
-    private String name;
-    
-    @Column(unique = true, nullable = false)
-    private String email;
-    
+    private String firstName;
+    private String lastName;
     private String phone;
     private String address;
     private String education;
@@ -29,26 +27,53 @@ public class User {
     private String pfId;
     private String panNo;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true) 
-    @JsonManagedReference
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private VerificationStatus verificationStatus = VerificationStatus.PENDING;
 
+    public enum VerificationStatus {
+        PENDING, VERIFIED, REJECTED
+    }
+
+    // ✅ One-to-One Relationship with UserLoginTable
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private UserLoginTable userLoginTable;
+
+    // ✅ One-to-One Mappings
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private ProfilePhoto profilePhoto;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-
     private Resume resume;
 
-    
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-
     private AadharProof aadharProof;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private TenthMarksheet tenthMarksheet;
 
-    //  Many-to-Many Relationship with Skills
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private TwelfthMarksheet twelfthMarksheet;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private GraduationMarksheet graduationMarksheet;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private PostGraduationMarksheet postGraduationMarksheet;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private ExperienceLetter experienceLetter;
+
+    // ✅ Many-to-Many Relationship with Skills
     @ManyToMany(fetch = FetchType.LAZY)
-
     @JoinTable(
         name = "UsersSkill_Table",
         joinColumns = @JoinColumn(name = "user_id"),
@@ -56,49 +81,30 @@ public class User {
     )
     private Set<Skill> skills = new HashSet<>();
 
-    //  Default Constructor
-    public User() {}
+    // ✅ Getters and Setters
 
-    //  Parameterized Constructor
-    public User(String name, String email, String phone, String address, String education, 
-                String currentEmployer, String designation, String experience, String passportId, 
-                String pfId, String panNo) {
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.education = education;
-        this.currentEmployer = currentEmployer;
-        this.designation = designation;
-        this.experience = experience;
-        this.passportId = passportId;
-        this.pfId = pfId;
-        this.panNo = panNo;
+    public Long getDetailId() {
+        return detailId;
     }
 
-    // Getters and Setters
-    public Long getUserId() {
-        return userId;
+    public void setDetailId(Long detailId) {
+        this.detailId = detailId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getName() {
-        return name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhone() {
@@ -173,28 +179,20 @@ public class User {
         this.panNo = panNo;
     }
 
-    public ProfilePhoto getProfilePhoto() {
-        return profilePhoto;
+    public VerificationStatus getVerificationStatus() {
+        return verificationStatus;
     }
 
-    public void setProfilePhoto(ProfilePhoto profilePhoto) {
-        this.profilePhoto = profilePhoto;
+    public void setVerificationStatus(VerificationStatus verificationStatus) {
+        this.verificationStatus = verificationStatus;
     }
 
-    public Resume getResume() {
-        return resume;
+    public UserLoginTable getUserLoginTable() {
+        return userLoginTable;
     }
 
-    public void setResume(Resume resume) {
-        this.resume = resume;
-    }
-
-    public AadharProof getAadharProof() {
-        return aadharProof;
-    }
-
-    public void setAadharProof(AadharProof aadharProof) {
-        this.aadharProof = aadharProof;
+    public void setUserLoginTable(UserLoginTable userLoginTable) {
+        this.userLoginTable = userLoginTable;
     }
 
     public Set<Skill> getSkills() {
