@@ -2,13 +2,17 @@ package Intl_BBI_EmployeeBgv.EmployeeVerification.Service;
 
 import java.util.List;
 import java.util.Map;
-
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserLoginDto;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.User;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Repository.UserLoginRepository;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Repository.UserRepository;
 
 @Service
 public class LoginService {
@@ -16,29 +20,42 @@ public class LoginService {
     @Autowired
     private UserLoginRepository userLoginRepository;
 
-    //  Create a new user
-    public UserLoginTable createUser(UserLoginTable userLoginTable) {
+    @Autowired
+    private UserRepository userRepository;
+
+    // Create a new user
+    public UserLoginTable createUser(UserLoginDto userLoginDto) {
+        UserLoginTable userLoginTable = new UserLoginTable();
+        userLoginTable.setEmail(userLoginDto.getEmail());
+        userLoginTable.setIsActive(userLoginDto.getIsActive());
+        userLoginTable.setRole(userLoginDto.getRole());
+
+        // Fetch User entity if provided
+        if (userLoginDto.getUserDetailId() != null) {
+            Optional<User> userOptional = userRepository.findById(userLoginDto.getUserDetailId());
+            userOptional.ifPresent(userLoginTable::setUser);
+        }
+
         return userLoginRepository.save(userLoginTable);
     }
 
-    //  Fetch all users
+    // Fetch all users
     public List<UserLoginTable> fetchUsers() {
         return userLoginRepository.findAll();
     }
 
-    //  Update user role and password
-    public UserLoginTable updateRole(Long userId, UserLoginTable updatedUser) {
+    // Update user role and status
+    public UserLoginTable updateRole(Long userId, UserLoginDto updatedUserDto) {
         UserLoginTable user = userLoginRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
 
-        user.setRole(updatedUser.getRole());
-        user.setIsActive(updatedUser.getIsActive());
-        user.setPassword(updatedUser.getPassword());
+        user.setRole(updatedUserDto.getRole());
+        user.setIsActive(updatedUserDto.getIsActive());
 
         return userLoginRepository.save(user);
     }
 
-    //  Update email, password, role, and isActive dynamically
+    // Update email, password, role, and isActive dynamically
     public UserLoginTable updateUserFields(Long userId, Map<String, Object> updates) {
         UserLoginTable user = userLoginRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));

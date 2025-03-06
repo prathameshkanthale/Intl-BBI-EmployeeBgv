@@ -2,11 +2,13 @@ package Intl_BBI_EmployeeBgv.EmployeeVerification.Controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserLoginDto;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Service.LoginService;
 
@@ -19,29 +21,31 @@ public class LoginController {
 
     // Create a new user
     @PostMapping(value = "/addUser")
-    public ResponseEntity<UserLoginTable> createUser(@RequestBody UserLoginTable userLoginTable) {
-        return ResponseEntity.ok(loginService.createUser(userLoginTable));
+    public ResponseEntity<UserLoginDto> createUser(@RequestBody UserLoginDto userLoginDto) {
+        UserLoginTable userLoginTable = loginService.createUser(userLoginDto);
+        return ResponseEntity.ok(UserLoginDto.fromEntity(userLoginTable));
     }
-
 
     // Fetch all users
     @GetMapping("/getUsers")
-    public ResponseEntity<List<UserLoginTable>> fetchUsers() {
-        List<UserLoginTable> users = loginService.fetchUsers();
+    public ResponseEntity<List<UserLoginDto>> fetchUsers() {
+        List<UserLoginDto> users = loginService.fetchUsers().stream()
+                .map(UserLoginDto::fromEntity)
+                .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
 
     // Update user role and password
     @PutMapping("/update/{userId}")
-    public ResponseEntity<UserLoginTable> updateRole(@PathVariable Long userId, @RequestBody UserLoginTable userLoginTable) {
-        UserLoginTable updatedUser = loginService.updateRole(userId, userLoginTable);
-        return ResponseEntity.ok(updatedUser);
+    public ResponseEntity<UserLoginDto> updateRole(@PathVariable Long userId, @RequestBody UserLoginDto userLoginDto) {
+        UserLoginTable updatedUser = loginService.updateRole(userId, userLoginDto);
+        return ResponseEntity.ok(UserLoginDto.fromEntity(updatedUser));
     }
 
-    //  Update specific fields dynamically (email, password, role, isActive)
+    // Update specific fields dynamically (email, password, role, isActive)
     @PatchMapping("/update-fields/{userId}")
-    public ResponseEntity<UserLoginTable> updateUserFields(@PathVariable Long userId, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<UserLoginDto> updateUserFields(@PathVariable Long userId, @RequestBody Map<String, Object> updates) {
         UserLoginTable updatedUser = loginService.updateUserFields(userId, updates);
-        return ResponseEntity.ok(updatedUser);
+        return ResponseEntity.ok(UserLoginDto.fromEntity(updatedUser));
     }
 }

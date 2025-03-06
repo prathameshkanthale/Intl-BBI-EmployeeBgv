@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class UserDetailsRequest {
 
-    private Long userId;  // Required for updates
+    private Long detailId;  // Required for updates
     private String FirstName;
     private String LastName;
     private int age;
@@ -39,8 +39,8 @@ public class UserDetailsRequest {
     public UserDetailsRequest() {}
 
     // Getters & Setters
-    public Long getUserId() { return userId; }
-    public void setUserId(Long userId) { this.userId = userId; }
+    public Long getdetailId() { return detailId; }
+    public void setdetailId(Long detailId) { this.detailId = detailId; }
 
     public String getFirstName() { return FirstName; }
     public void setFirstName(String FirstName) { this.FirstName= FirstName; }
