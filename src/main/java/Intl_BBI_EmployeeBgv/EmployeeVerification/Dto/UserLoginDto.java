@@ -10,6 +10,7 @@ public class UserLoginDto {
     private String email;
     private boolean isActive;
     private Role role;
+    private String password;
     private Long userDetailId; // Reference to User entity
     
     // Constructors
@@ -21,18 +22,22 @@ public class UserLoginDto {
         this.email = email;
         this.isActive = isActive;
         this.role = role;
-        this.userDetailId = userDetailId;
+        this.password=  password;    
+       this.userDetailId = userDetailId;
     }
 
     // Getters and Setters
     public Long getUserId() {
         return userId;
     }
+    
 
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+    
+    
     public String getEmail() {
         return email;
     }
@@ -64,8 +69,22 @@ public class UserLoginDto {
     public void setUserDetailId(Long userDetailId) {
         this.userDetailId = userDetailId;
     }
+    
+    
 
-    // Static method to convert entity to DTO
+    public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	// Static method to convert entity to DTO
     public static UserLoginDto fromEntity(UserLoginTable userLogin) {
         return new UserLoginDto(
                 userLogin.getUserId(),

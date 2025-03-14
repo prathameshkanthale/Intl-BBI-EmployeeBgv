@@ -81,101 +81,101 @@ public class FileController {
     }
 
     // ** View & Download Profile Photo **
-    @GetMapping("/view/profile-photo/{userId}")
-    public ResponseEntity<ByteArrayResource> viewProfilePhoto(@PathVariable Long userId) {
-        return handleFileResponse(profilePhotoRepository.findByUser_detailId(userId), "profile_photo.jpg", MediaType.IMAGE_JPEG);
+    @GetMapping("/view/profile-photo/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewProfilePhoto(@PathVariable Long detailId) {
+        return handleFileResponse(profilePhotoRepository.findByUser_detailId(detailId), "profile_photo.jpg", MediaType.IMAGE_JPEG);
     }
 
-    @GetMapping("/download/profile-photo/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadProfilePhoto(@PathVariable Long userId) {
-        return handleFileResponse(profilePhotoRepository.findByUser_detailId(userId), "profile_photo.jpg", MediaType.IMAGE_JPEG);
+    @GetMapping("/download/profile-photo/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadProfilePhoto(@PathVariable Long detailId) {
+        return handleFileResponse(profilePhotoRepository.findByUser_detailId(detailId), "profile_photo.jpg", MediaType.IMAGE_JPEG);
     }
 
     // ** View & Download Resume **
-    @GetMapping("/view/resume/{userId}")
-    public ResponseEntity<ByteArrayResource> viewResume(@PathVariable Long userId) {
-        return handleFileResponse(resumeRepository.findByUser_detailId(userId), "resume.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/resume/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewResume(@PathVariable Long detailId) {
+        return handleFileResponse(resumeRepository.findByUser_detailId(detailId), "resume.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/resume/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadResume(@PathVariable Long userId) {
-        return handleFileResponse(resumeRepository.findByUser_detailId(userId), "resume.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/resume/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadResume(@PathVariable Long detailId) {
+        return handleFileResponse(resumeRepository.findByUser_detailId(detailId), "resume.pdf", MediaType.APPLICATION_PDF);
     }
 
     // ** View & Download Aadhar Proof **
-    @GetMapping("/view/aadhar/{userId}")
-    public ResponseEntity<ByteArrayResource> viewAadhar(@PathVariable Long userId) {
-        return handleFileResponse(aadharProofRepository.findByUser_detailId(userId), "aadhar.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/aadhar/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewAadhar(@PathVariable Long detailId) {
+        return handleFileResponse(aadharProofRepository.findByUser_detailId(detailId), "aadhar.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/aadhar/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadAadhar(@PathVariable Long userId) {
-        return handleFileResponse(aadharProofRepository.findByUser_detailId(userId), "aadhar.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/aadhar/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadAadhar(@PathVariable Long detailId) {
+        return handleFileResponse(aadharProofRepository.findByUser_detailId(detailId), "aadhar.pdf", MediaType.APPLICATION_PDF);
     }
 
     // ** View & Download 10th Marksheet **
-    @GetMapping("/view/tenth-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> viewTenthMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(tenthMarksheetRepository.findByUser_detailId(userId), "10th_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/tenth-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewTenthMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(tenthMarksheetRepository.findByUser_detailId(detailId), "10th_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/tenth-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadTenthMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(tenthMarksheetRepository.findByUser_detailId(userId), "10th_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/tenth-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadTenthMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(tenthMarksheetRepository.findByUser_detailId(detailId), "10th_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
     // ** View & Download 12th Marksheet **
-    @GetMapping("/view/twelfth-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> viewTwelfthMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(twelfthMarksheetRepository.findByUser_detailId(userId), "12th_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/twelfth-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewTwelfthMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(twelfthMarksheetRepository.findByUser_detailId(detailId), "12th_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/twelfth-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadTwelfthMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(twelfthMarksheetRepository.findByUser_detailId(userId), "12th_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/twelfth-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadTwelfthMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(twelfthMarksheetRepository.findByUser_detailId(detailId), "12th_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
     // ** View & Download Diploma Marksheet **
-    @GetMapping("/view/diploma-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> viewDiplomaMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(diplomaMarksheetRepository.findByUser_detailId(userId), "diploma_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/diploma-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewDiplomaMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(diplomaMarksheetRepository.findByUser_detailId(detailId), "diploma_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/diploma-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadDiplomaMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(diplomaMarksheetRepository.findByUser_detailId(userId), "diploma_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/diploma-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadDiplomaMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(diplomaMarksheetRepository.findByUser_detailId(detailId), "diploma_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
     
  // ** View & Download Graduation Marksheet **
-    @GetMapping("/view/graduation-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> viewGraduationMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(graduationMarksheetRepository.findByUser_detailId(userId), "graduation_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/graduation-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewGraduationMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(graduationMarksheetRepository.findByUser_detailId(detailId), "graduation_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/graduation-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadGraduationMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(graduationMarksheetRepository.findByUser_detailId(userId), "graduation_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/graduation-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadGraduationMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(graduationMarksheetRepository.findByUser_detailId(detailId), "graduation_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
     // ** View & Download PostGraduation Marksheet **
-    @GetMapping("/view/postgraduation-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> viewPostGraduationMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(postGraduationMarksheetRepository.findByUser_detailId(userId), "postgraduation_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/postgraduation-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewPostGraduationMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(postGraduationMarksheetRepository.findByUser_detailId(detailId), "postgraduation_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/postgraduation-marksheet/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadPostGraduationMarksheet(@PathVariable Long userId) {
-        return handleFileResponse(postGraduationMarksheetRepository.findByUser_detailId(userId), "postgraduation_marksheet.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/postgraduation-marksheet/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadPostGraduationMarksheet(@PathVariable Long detailId) {
+        return handleFileResponse(postGraduationMarksheetRepository.findByUser_detailId(detailId), "postgraduation_marksheet.pdf", MediaType.APPLICATION_PDF);
     }
 
     // ** View & Download Experience Letter **
-    @GetMapping("/view/experience-letter/{userId}")
-    public ResponseEntity<ByteArrayResource> viewExperienceLetter(@PathVariable Long userId) {
-        return handleFileResponse(experienceLetterRepository.findByUser_detailId(userId), "experience_letter.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/view/experience-letter/{detailId}")
+    public ResponseEntity<ByteArrayResource> viewExperienceLetter(@PathVariable Long detailId) {
+        return handleFileResponse(experienceLetterRepository.findByUser_detailId(detailId), "experience_letter.pdf", MediaType.APPLICATION_PDF);
     }
 
-    @GetMapping("/download/experience-letter/{userId}")
-    public ResponseEntity<ByteArrayResource> downloadExperienceLetter(@PathVariable Long userId) {
-        return handleFileResponse(experienceLetterRepository.findByUser_detailId(userId), "experience_letter.pdf", MediaType.APPLICATION_PDF);
+    @GetMapping("/download/experience-letter/{detailId}")
+    public ResponseEntity<ByteArrayResource> downloadExperienceLetter(@PathVariable Long detailId) {
+        return handleFileResponse(experienceLetterRepository.findByUser_detailId(detailId), "experience_letter.pdf", MediaType.APPLICATION_PDF);
     }
 }

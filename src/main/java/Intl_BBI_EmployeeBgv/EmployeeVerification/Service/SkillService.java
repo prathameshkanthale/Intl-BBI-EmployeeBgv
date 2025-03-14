@@ -49,8 +49,8 @@ public class SkillService {
     }
 
     @Transactional
-    public void addSkillToUser(Long userId, Long skillId) {
-        User user = userRepository.findById(userId)
+    public void addSkillToUser(Long detailId, Long skillId) {
+        User user = userRepository.findById(detailId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         Skill skill = skillRepository.findById(skillId)

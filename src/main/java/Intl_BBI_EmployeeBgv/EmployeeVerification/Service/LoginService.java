@@ -3,12 +3,13 @@ package Intl_BBI_EmployeeBgv.EmployeeVerification.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserLoginDto;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserVerificationDTO;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.User;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Repository.UserLoginRepository;
@@ -29,6 +30,7 @@ public class LoginService {
         userLoginTable.setEmail(userLoginDto.getEmail());
         userLoginTable.setIsActive(userLoginDto.getIsActive());
         userLoginTable.setRole(userLoginDto.getRole());
+        userLoginTable.setPassword(userLoginDto.getPassword());
 
         // Fetch User entity if provided
         if (userLoginDto.getUserDetailId() != null) {
@@ -81,4 +83,30 @@ public class LoginService {
 
         return userLoginRepository.save(user);
     }
+// validate user 
+    public UserVerificationDTO verificationOfUser(UserLoginDto userLoginDto) {
+        Optional<UserLoginTable> user = userLoginRepository.findByEmail(userLoginDto.getEmail());
+        UserVerificationDTO response = new UserVerificationDTO();
+
+        if (user.isPresent()) { // Check if user exists
+            if (userLoginDto.getPassword().equals(user.get().getPassword())) { // Use equals() for comparison
+                response.setResponse("verified");
+                response.setEmail(user.get().getEmail());
+                response.setRole(user.get().getRole().name()); // Convert Enum to String
+                response.setUserDetailId(user.get().getUser().getDetailId());
+                response.setUserId(user.get().getUserId());
+            } else {
+                response.setResponse("no password match");
+            }
+        } else {
+            response.setResponse("false");
+        }
+
+        return response;
+    }
+
+    
+   
+    
+    
 }

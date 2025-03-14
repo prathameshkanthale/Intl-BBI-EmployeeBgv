@@ -28,9 +28,9 @@ public class UserController {
     }
 
     // ✅ Get a single user
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
-        return ResponseEntity.ok(userService.getUserById(userId));
+    @GetMapping("/{detailId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long detailId) {
+        return ResponseEntity.ok(userService.getUserById(detailId));
     }
 
     // ✅ Create a new user
@@ -40,35 +40,35 @@ public class UserController {
     }
 
     // ✅ Update user partially
-    @PatchMapping("/{userId}")
-    public ResponseEntity<User> updateUserPartial(@PathVariable Long userId, @RequestBody Map<String, Object> updates) {
-        return ResponseEntity.ok(userService.updateUser(userId, updates));
+    @PatchMapping("/{detailId}")
+    public ResponseEntity<User> updateUserPartial(@PathVariable Long detailId, @RequestBody Map<String, Object> updates) {
+        return ResponseEntity.ok(userService.updateUser(detailId, updates));
     }
 
     // ✅ Delete a user
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
+    @DeleteMapping("/{detailId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long detailId) {
+        userService.deleteUser(detailId);
         return ResponseEntity.ok("User deleted successfully.");
     }
 
     // ✅ Upload any document (ProfilePhoto, Resume, AadharProof, etc.)
-    @PostMapping("/{userId}/upload/{type}")
-    public ResponseEntity<String> uploadFile(@PathVariable Long userId, @PathVariable String type,
+    @PostMapping("/{detailId}/upload/{type}")
+    public ResponseEntity<String> uploadFile(@PathVariable Long detailId, @PathVariable String type,
                                              @RequestParam("file") MultipartFile file) throws IOException {
-        return ResponseEntity.ok(userService.uploadFile(userId, type, file));
+        return ResponseEntity.ok(userService.uploadFile(detailId, type, file));
     }
 
     // ✅ Retrieve file URL
-    @GetMapping("/{userId}/file/{type}")
-    public ResponseEntity<String> getFileUrl(@PathVariable Long userId, @PathVariable String type) {
-        return ResponseEntity.ok(userService.getFileUrl(userId, type));
+    @GetMapping("/{detailId}/file/{type}")
+    public ResponseEntity<String> getFileUrl(@PathVariable Long detailId, @PathVariable String type) {
+        return ResponseEntity.ok(userService.getFileUrl(detailId, type));
     }
 
     // ✅ Delete uploaded file
-    @DeleteMapping("/{userId}/file/{type}")
-    public ResponseEntity<String> deleteFile(@PathVariable Long userId, @PathVariable String type) {
-        userService.deleteFile(userId, type);
+    @DeleteMapping("/{detailId}/file/{type}")
+    public ResponseEntity<String> deleteFile(@PathVariable Long detailId, @PathVariable String type) {
+        userService.deleteFile(detailId, type);
         return ResponseEntity.ok("File deleted successfully.");
     }
 }

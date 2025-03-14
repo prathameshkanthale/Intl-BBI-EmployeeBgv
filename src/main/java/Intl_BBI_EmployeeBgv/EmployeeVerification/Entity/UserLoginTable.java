@@ -16,7 +16,7 @@ public class UserLoginTable {
    
     private String password;
 
-    
+    @Column(nullable = false)
     private boolean isActive = true;
 
     @Enumerated(EnumType.STRING)
@@ -31,7 +31,7 @@ public class UserLoginTable {
     @OneToOne
     @JoinColumn(name = "detail_id", referencedColumnName = "detailId")
     private User user;
-
+   
     // Getters and Setters
     public Long getUserId() {
         return userId;

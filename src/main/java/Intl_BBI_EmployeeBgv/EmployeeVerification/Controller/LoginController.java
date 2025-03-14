@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserLoginDto;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserVerificationDTO;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Service.LoginService;
 
@@ -18,7 +19,7 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-
+    
     // Create a new user
     @PostMapping(value = "/addUser")
     public ResponseEntity<UserLoginDto> createUser(@RequestBody UserLoginDto userLoginDto) {
@@ -48,4 +49,20 @@ public class LoginController {
         UserLoginTable updatedUser = loginService.updateUserFields(userId, updates);
         return ResponseEntity.ok(UserLoginDto.fromEntity(updatedUser));
     }
+    
+    // validate user 
+    
+    @RestController // This removes the need for @ResponseBody on methods
+    @RequestMapping("/user")
+    public class UserController {
+
+        @Autowired
+        private LoginService loginService;
+
+        @PostMapping("/validateUser") // Change to POST since it takes a request body
+        public UserVerificationDTO verificationUser(@RequestBody UserLoginDto userLoginDto) {
+            return loginService.verificationOfUser(userLoginDto);
+        }
+    }
+
 }

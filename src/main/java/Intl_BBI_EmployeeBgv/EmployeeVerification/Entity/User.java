@@ -3,6 +3,8 @@ package Intl_BBI_EmployeeBgv.EmployeeVerification.Entity;
 import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -32,44 +34,45 @@ public class User {
     private VerificationStatus verificationStatus = VerificationStatus.PENDING;
 
     public enum VerificationStatus {
-        PENDING, VERIFIED, REJECTED
+        PENDING, VERIFIED, REJECTED 
     }
 
     // ✅ One-to-One Relationship with UserLoginTable
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private UserLoginTable userLoginTable;
 
     // ✅ One-to-One Mappings
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private ProfilePhoto profilePhoto;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private Resume resume;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private AadharProof aadharProof;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private TenthMarksheet tenthMarksheet;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private TwelfthMarksheet twelfthMarksheet;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private GraduationMarksheet graduationMarksheet;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private PostGraduationMarksheet postGraduationMarksheet;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
+    @JsonIgnore
     private ExperienceLetter experienceLetter;
 
     // ✅ Many-to-Many Relationship with Skills

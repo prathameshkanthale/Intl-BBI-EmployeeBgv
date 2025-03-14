@@ -29,15 +29,15 @@ public class SkillController {
     }
 
     // ✅ Add skill to a user
-    @PostMapping("/{userId}/addSkill/{skillId}")
-    public ResponseEntity<String> addSkillToUser(@PathVariable Long userId, @PathVariable Long skillId) {
-        skillService.addSkillToUser(userId, skillId);
-        return ResponseEntity.ok("Skill added successfully to user " + userId);
+    @PostMapping("/{detailId}/addSkill/{skillId}")
+    public ResponseEntity<String> addSkillToUser(@PathVariable Long detailId, @PathVariable Long skillId) {
+        skillService.addSkillToUser(detailId, skillId);
+        return ResponseEntity.ok("Skill added successfully to user " + detailId);
     } 
     @PutMapping("/{skillId}")
-    public Skill updateSkill(@PathVariable Long skillId, @RequestBody Skill skill) 
+    public Skill updateSkill(@PathVariable Long detailId, @RequestBody Skill skill) 
     {
-        return skillService.updateSkill(skillId, skill);
+        return skillService.updateSkill(detailId, skill);
     }
     
     
