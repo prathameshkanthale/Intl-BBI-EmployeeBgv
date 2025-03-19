@@ -24,7 +24,7 @@ public class LoginController {
     @PostMapping(value = "/addUser")
     public ResponseEntity<UserLoginDto> createUser(@RequestBody UserLoginDto userLoginDto) {
         UserLoginTable userLoginTable = loginService.createUser(userLoginDto);
-        return ResponseEntity.ok(UserLoginDto.fromEntity(userLoginTable));
+        return ResponseEntity.ok(userLoginDto.fromEntity(userLoginTable));
     }
 
     // Fetch all users

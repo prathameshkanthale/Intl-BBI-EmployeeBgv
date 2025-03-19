@@ -31,13 +31,19 @@ public class LoginService {
         userLoginTable.setIsActive(userLoginDto.getIsActive());
         userLoginTable.setRole(userLoginDto.getRole());
         userLoginTable.setPassword(userLoginDto.getPassword());
+        
 
         // Fetch User entity if provided
-        if (userLoginDto.getUserDetailId() != null) {
-            Optional<User> userOptional = userRepository.findById(userLoginDto.getUserDetailId());
-            userOptional.ifPresent(userLoginTable::setUser);
-        }
-
+//        if (userLoginDto.getUserDetailId() != null) {
+//            Optional<User> userOptional = userRepository.findById(userLoginDto.getUserDetailId());
+//            userOptional.ifPresent(userLoginTable::setUser);
+//        }
+        
+        User user = new User ();
+        user.setFirstName(userLoginDto.getFirstName());
+        user.setLastName(userLoginDto.getLastName());
+       User userResult=userRepository.save(user);
+       userLoginTable.setUser(userResult);
         return userLoginRepository.save(userLoginTable);
     }
 

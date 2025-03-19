@@ -13,17 +13,25 @@ public class UserLoginDto {
     private String password;
     private Long userDetailId; // Reference to User entity
     
+    private String firstName;
+    private String lastName;
+    
     // Constructors
     public UserLoginDto() {
     }
 
-    public UserLoginDto(Long userId, String email, boolean isActive, Role role, Long userDetailId) {
+    public UserLoginDto(Long userId, String email, boolean isActive, Role role , String password,String firstName, String lastName, Long detailId) {
         this.userId = userId;
         this.email = email;
         this.isActive = isActive;
         this.role = role;
-        this.password=  password;    
-       this.userDetailId = userDetailId;
+        this.password=  password;
+        this.firstName=firstName;
+        this.lastName=lastName;
+        userDetailId=detailId;
+       
+        
+//       this.userDetailId = userDetailId;
     }
 
     // Getters and Setters
@@ -62,18 +70,36 @@ public class UserLoginDto {
         this.role = role;
     }
 
-    public Long getUserDetailId() {
-        return userDetailId;
-    }
-
-    public void setUserDetailId(Long userDetailId) {
-        this.userDetailId = userDetailId;
-    }
+//    public Long getUserDetailId() {
+//        return userDetailId;
+//    }
+//
+//    public void setUserDetailId(Long userDetailId) {
+//        this.userDetailId = userDetailId;
+//    }
+    
+    
     
     
 
     public String getPassword() {
 		return password;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public void setPassword(String password) {
@@ -91,6 +117,9 @@ public class UserLoginDto {
                 userLogin.getEmail(),
                 userLogin.getIsActive(),
                 userLogin.getRole(),
+                userLogin.getPassword(),
+                userLogin.getUser() != null ? userLogin.getUser().getFirstName() : null,
+                userLogin.getUser() != null ? userLogin.getUser().getLastName() : null,
                 userLogin.getUser() != null ? userLogin.getUser().getDetailId() : null
         );
     }
