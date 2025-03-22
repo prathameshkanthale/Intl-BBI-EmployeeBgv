@@ -110,6 +110,23 @@ public class LoginService {
 
         return response;
     }
+    
+    public boolean changePassword(Long userId, String oldPassword, String newPassword) {
+        // Fetch the user by userId
+        UserLoginTable user = userLoginRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found."));
+
+        // Validate the old password
+        if (!user.getPassword().equals(oldPassword)) {
+            return false; // Old password does not match
+        }
+
+        // Update the password
+        user.setPassword(newPassword);
+        userLoginRepository.save(user);
+
+        return true; // Password changed successfully
+    }
 
     
    

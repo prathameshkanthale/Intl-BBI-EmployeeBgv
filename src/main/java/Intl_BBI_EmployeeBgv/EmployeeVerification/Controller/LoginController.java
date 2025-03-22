@@ -21,6 +21,7 @@ public class LoginController {
     private LoginService loginService;
     
     // Create a new user
+    
     @PostMapping(value = "/addUser")
     public ResponseEntity<UserLoginDto> createUser(@RequestBody UserLoginDto userLoginDto) {
         UserLoginTable userLoginTable = loginService.createUser(userLoginDto);
@@ -65,5 +66,44 @@ public class LoginController {
             return loginService.verificationOfUser(UserLogin);
         }
     }
+    
+    @PostMapping("/changePassword/{userId}")
+    public ResponseEntity<String> changePassword(
+            @PathVariable Long userId,
+            @RequestBody Map<String, String> passwordDetails) {
+        try {
+            // Log the received payload for debugging
+            System.out.println("Received passwordDetails: " + passwordDetails);
 
+            // Extract fields from the request body
+            String oldPassword = passwordDetails.get("oldPassword");
+            String newPassword = passwordDetails.get("newPassword");
+            String confirmPassword = passwordDetails.get("confirmPassword");
+
+            // Log the extracted values for debugging
+            System.out.println("oldPassword: " + oldPassword);
+            System.out.println("newPassword: " + newPassword);
+            System.out.println("confirmPassword: " + confirmPassword);
+
+            // Validate the request
+            if (oldPassword == null || newPassword == null || confirmPassword == null) {
+                return ResponseEntity.badRequest().body("All fields are required.");
+            }
+
+            if (!newPassword.equals(confirmPassword)) {
+                return ResponseEntity.badRequest().body("New password and confirm password do not match.");
+            }
+
+            // Call the service to change the password
+            boolean isPasswordChanged = loginService.changePassword(userId, oldPassword, newPassword);
+
+            if (isPasswordChanged) {
+                return ResponseEntity.ok("Password changed successfully.");
+            } else {
+                return ResponseEntity.badRequest().body("Failed to change password. Please check your old password.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
+        }
+    }
 }
