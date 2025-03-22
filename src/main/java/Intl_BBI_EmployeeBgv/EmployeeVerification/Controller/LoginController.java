@@ -60,8 +60,9 @@ public class LoginController {
         private LoginService loginService;
 
         @PostMapping("/validateUser") // Change to POST since it takes a request body
-        public UserVerificationDTO verificationUser(@RequestBody UserLoginDto userLoginDto) {
-            return loginService.verificationOfUser(userLoginDto);
+        public UserVerificationDTO verificationUser(@RequestBody Map<String,String>
+        UserLogin ) {
+            return loginService.verificationOfUser(UserLogin);
         }
     }
 

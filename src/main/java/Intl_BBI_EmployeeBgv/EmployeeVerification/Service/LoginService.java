@@ -90,12 +90,12 @@ public class LoginService {
         return userLoginRepository.save(user);
     }
 // validate user 
-    public UserVerificationDTO verificationOfUser(UserLoginDto userLoginDto) {
-        Optional<UserLoginTable> user = userLoginRepository.findByEmail(userLoginDto.getEmail());
+    public UserVerificationDTO verificationOfUser(Map<String,String > UserLogin ) {
+        Optional<UserLoginTable> user = userLoginRepository.findByEmail(UserLogin.get("emailId"));
         UserVerificationDTO response = new UserVerificationDTO();
 
         if (user.isPresent()) { // Check if user exists
-            if (userLoginDto.getPassword().equals(user.get().getPassword())) { // Use equals() for comparison
+            if (UserLogin.get("password").equals(user.get().getPassword())) { // Use equals() for comparison
                 response.setResponse("verified");
                 response.setEmail(user.get().getEmail());
                 response.setRole(user.get().getRole().name()); // Convert Enum to String
