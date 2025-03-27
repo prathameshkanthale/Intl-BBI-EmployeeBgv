@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserLoginDto;
@@ -16,7 +17,7 @@ import Intl_BBI_EmployeeBgv.EmployeeVerification.Repository.UserLoginRepository;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Repository.UserRepository;
 
 @Service
-public class LoginService {
+public class LoginService<T> {
 
     @Autowired
     private UserLoginRepository userLoginRepository;
@@ -90,7 +91,7 @@ public class LoginService {
         return userLoginRepository.save(user);
     }
 // validate user 
-    public UserVerificationDTO verificationOfUser(Map<String,String > UserLogin ) {
+    public ResponseEntity<UserVerificationDTO> verificationOfUser(Map<String,String > UserLogin ) {
         Optional<UserLoginTable> user = userLoginRepository.findByEmail(UserLogin.get("emailId"));
         UserVerificationDTO response = new UserVerificationDTO();
 
@@ -101,14 +102,19 @@ public class LoginService {
                 response.setRole(user.get().getRole().name()); // Convert Enum to String
                 response.setUserDetailId(user.get().getUser().getDetailId());
                 response.setUserId(user.get().getUserId());
+               return ResponseEntity.ok(response);
             } else {
                 response.setResponse("no password match");
+                
+              return  ResponseEntity.badRequest().body(response);
             }
         } else {
             response.setResponse("false");
+            return ResponseEntity.notFound().build();
         }
+        
 
-        return response;
+       // return response;
     }
     
     public boolean changePassword(Long userId, String oldPassword, String newPassword) {
@@ -116,9 +122,14 @@ public class LoginService {
         UserLoginTable user = userLoginRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found."));
 
-        // Validate the old password
+        // Validate the old password (consider using password encoder if you have one)
         if (!user.getPassword().equals(oldPassword)) {
             return false; // Old password does not match
+        }
+
+        // Don't allow same password
+        if (oldPassword.equals(newPassword)) {
+            throw new IllegalArgumentException("New password must be different from old password");
         }
 
         // Update the password
@@ -127,7 +138,8 @@ public class LoginService {
 
         return true; // Password changed successfully
     }
-
+    
+    
     
    
     

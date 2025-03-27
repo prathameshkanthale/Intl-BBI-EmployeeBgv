@@ -31,8 +31,7 @@ public class LoginController {
     // Fetch all users
     @GetMapping("/getUsers")
     public ResponseEntity<List<UserLoginDto>> fetchUsers() {
-        List<UserLoginDto> users = loginService.fetchUsers().stream()
-                .map(UserLoginDto::fromEntity)
+        List<UserLoginDto> users = loginService.fetchUsers().stream().map(UserLoginDto::fromEntity)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
@@ -61,9 +60,11 @@ public class LoginController {
         private LoginService loginService;
 
         @PostMapping("/validateUser") // Change to POST since it takes a request body
-        public UserVerificationDTO verificationUser(@RequestBody Map<String,String>
+        public ResponseEntity<UserVerificationDTO> verificationUser(@RequestBody Map<String,String>
         UserLogin ) {
+            
             return loginService.verificationOfUser(UserLogin);
+            
         }
     }
     
@@ -72,18 +73,10 @@ public class LoginController {
             @PathVariable Long userId,
             @RequestBody Map<String, String> passwordDetails) {
         try {
-            // Log the received payload for debugging
-            System.out.println("Received passwordDetails: " + passwordDetails);
-
             // Extract fields from the request body
             String oldPassword = passwordDetails.get("oldPassword");
             String newPassword = passwordDetails.get("newPassword");
             String confirmPassword = passwordDetails.get("confirmPassword");
-
-            // Log the extracted values for debugging
-            System.out.println("oldPassword: " + oldPassword);
-            System.out.println("newPassword: " + newPassword);
-            System.out.println("confirmPassword: " + confirmPassword);
 
             // Validate the request
             if (oldPassword == null || newPassword == null || confirmPassword == null) {
@@ -92,6 +85,10 @@ public class LoginController {
 
             if (!newPassword.equals(confirmPassword)) {
                 return ResponseEntity.badRequest().body("New password and confirm password do not match.");
+            }
+
+            if (newPassword.length() < 8) {
+                return ResponseEntity.badRequest().body("Password must be at least 8 characters long.");
             }
 
             // Call the service to change the password

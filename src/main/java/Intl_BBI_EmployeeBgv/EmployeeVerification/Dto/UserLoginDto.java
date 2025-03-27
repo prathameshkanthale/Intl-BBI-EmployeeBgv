@@ -8,7 +8,7 @@ public class UserLoginDto {
     
     private Long userId;
     private String email;
-    private boolean isActive;
+    private boolean isActive=true;
     private Role role;
     private String password;
     private Long userDetailId; // Reference to User entity

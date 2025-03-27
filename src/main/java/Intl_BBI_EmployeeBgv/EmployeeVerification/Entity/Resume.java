@@ -21,7 +21,7 @@ public class Resume {
     private byte[] resumeData;
 
     @OneToOne
-    @JoinColumn(name = "detail_id", referencedColumnName = "detailId", unique = true, nullable = false)
+    @JoinColumn(name = "detail_id", referencedColumnName = "detailId",  nullable = false)
     @JsonBackReference
     private User user;
 

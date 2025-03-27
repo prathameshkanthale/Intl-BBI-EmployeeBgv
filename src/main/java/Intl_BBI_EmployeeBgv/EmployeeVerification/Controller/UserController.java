@@ -58,7 +58,7 @@ public class UserController {
                                              @RequestParam("file") MultipartFile file) throws IOException {
         return ResponseEntity.ok(userService.uploadFile(detailId, type, file));
     }
-
+   
     // ✅ Retrieve file URL
     @GetMapping("/{detailId}/file/{type}")
     public ResponseEntity<String> getFileUrl(@PathVariable Long detailId, @PathVariable String type) {
@@ -70,5 +70,13 @@ public class UserController {
     public ResponseEntity<String> deleteFile(@PathVariable Long detailId, @PathVariable String type) {
         userService.deleteFile(detailId, type);
         return ResponseEntity.ok("File deleted successfully.");
+    }
+    
+ // ✅ PUT endpoint for complete BGV update
+    @PutMapping("/{detailId}/bgv")
+    public ResponseEntity<User> updateBGVDetails(
+            @PathVariable Long detailId,
+            @RequestBody UserDetailsRequest updateRequest) {
+        return ResponseEntity.ok(userService.updateBGVDetails(detailId, updateRequest));
     }
 }

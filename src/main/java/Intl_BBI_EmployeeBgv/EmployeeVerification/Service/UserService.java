@@ -2,6 +2,7 @@ package Intl_BBI_EmployeeBgv.EmployeeVerification.Service;
 
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Dto.UserDetailsRequest;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.*;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Exception.ResourceNotFoundException;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Exception.UserNotFoundException;
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,5 +162,24 @@ public class UserService {
     // Get file URL
     public String getFileUrl(Long detailId, String type) {
         return "https://yourdomain.com/files/" + type + "/" + detailId;
+    }
+    
+    
+    public User updateBGVDetails(Long detailId, UserDetailsRequest updateRequest) {
+        User user = userRepository.findById(detailId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        // Update only BGV-specific fields
+        user.setPhone(updateRequest.getPhone());
+        user.setAddress(updateRequest.getAddress());
+        user.setEducation(updateRequest.getEducation());
+        user.setCurrentEmployer(updateRequest.getCurrentEmployer());
+        user.setDesignation(updateRequest.getDesignation());
+        user.setExperience(updateRequest.getExperience());
+        user.setPassportId(updateRequest.getPassportId());
+        user.setPfId(updateRequest.getPfId());
+        user.setPanNo(updateRequest.getPanNo());
+      
+        return userRepository.save(user);
     }
 }
