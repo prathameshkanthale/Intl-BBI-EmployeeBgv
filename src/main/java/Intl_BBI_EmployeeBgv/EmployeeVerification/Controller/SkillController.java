@@ -47,6 +47,17 @@ public class SkillController {
         return ResponseEntity.ok(updatedSkill);
     }
     
+    @PostMapping("/users/{detailId}")
+    public ResponseEntity<?> addSkillsToUser(@PathVariable Long detailId, @RequestBody Map<String, List<Long>> request) {
+        try {
+            List<Long> skills = request.get("skills");
+            skillService.addSkillsToUser(detailId, skills);
+            return ResponseEntity.ok("ok");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message", e.getMessage()));
+        }
+    }
+    
     
  // Delete skill by skillId
     @DeleteMapping("/{skillId}")

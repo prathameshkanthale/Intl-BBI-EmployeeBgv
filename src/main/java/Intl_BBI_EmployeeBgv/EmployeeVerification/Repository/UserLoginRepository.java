@@ -10,7 +10,7 @@ public interface UserLoginRepository extends JpaRepository<UserLoginTable, Long>
     Optional<UserLoginTable> findByUserId(Long userId);
     
     Optional<UserLoginTable> findByEmail(String email);
-    
+   
     // Find user by userId and password (for authentication)
     Optional<UserLoginTable> findByUserIdAndPassword(Long userId, String password);
 }

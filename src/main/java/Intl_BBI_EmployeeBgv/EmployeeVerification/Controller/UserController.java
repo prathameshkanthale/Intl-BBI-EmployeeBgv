@@ -22,16 +22,17 @@ public class UserController {
     }
 
     // ✅ Get all users
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     // ✅ Get a single user
-    @GetMapping("/{detailId}")
-    public ResponseEntity<User> getUserById(@PathVariable Long detailId) {
+    @GetMapping("/details/{detailId}")
+    public ResponseEntity<User> getUserById(@PathVariable("detailId") Long detailId) {
         return ResponseEntity.ok(userService.getUserById(detailId));
     }
+
 
     // ✅ Create a new user
     @PostMapping
@@ -60,7 +61,7 @@ public class UserController {
     }
    
     // ✅ Retrieve file URL
-    @GetMapping("/{detailId}/file/{type}")
+    @GetMapping("/files/{detailId}/file/{type}")
     public ResponseEntity<String> getFileUrl(@PathVariable Long detailId, @PathVariable String type) {
         return ResponseEntity.ok(userService.getFileUrl(detailId, type));
     }
@@ -79,4 +80,7 @@ public class UserController {
             @RequestBody UserDetailsRequest updateRequest) {
         return ResponseEntity.ok(userService.updateBGVDetails(detailId, updateRequest));
     }
+    
+    
+    
 }

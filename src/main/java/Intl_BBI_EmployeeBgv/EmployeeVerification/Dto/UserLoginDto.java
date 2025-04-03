@@ -1,51 +1,49 @@
 package Intl_BBI_EmployeeBgv.EmployeeVerification.Dto;
 
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable.Role;
-
 import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.UserLoginTable;
+import Intl_BBI_EmployeeBgv.EmployeeVerification.Entity.User;
 
 public class UserLoginDto {
+	
+
     
     private Long userId;
     private String email;
-    private boolean isActive=true;
+    private boolean isActive = true;
     private Role role;
     private String password;
-    private Long userDetailId; // Reference to User entity
-    
+    private Long userDetailId; // Change type to Long
+ // Reference to User entity
     private String firstName;
     private String lastName;
-    
-    // Constructors
-    public UserLoginDto() {
-    }
+    private String verificationStatus; // ✅ New Field
 
-    public UserLoginDto(Long userId, String email, boolean isActive, Role role , String password,String firstName, String lastName, Long detailId) {
+    // Constructors
+    public UserLoginDto() {}
+
+    public UserLoginDto(Long userId, String email, boolean isActive, Role role, String password, 
+                        String firstName, String lastName, Long detailId, String verificationStatus) {
         this.userId = userId;
         this.email = email;
         this.isActive = isActive;
         this.role = role;
-        this.password=  password;
-        this.firstName=firstName;
-        this.lastName=lastName;
-        userDetailId=detailId;
-       
-        
-//       this.userDetailId = userDetailId;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userDetailId = detailId;
+        this.verificationStatus = verificationStatus;
     }
 
     // Getters and Setters
     public Long getUserId() {
         return userId;
     }
-    
 
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    
-    
     public String getEmail() {
         return email;
     }
@@ -70,57 +68,59 @@ public class UserLoginDto {
         this.role = role;
     }
 
-//    public Long getUserDetailId() {
-//        return userDetailId;
-//    }
-//
-//    public void setUserDetailId(Long userDetailId) {
-//        this.userDetailId = userDetailId;
-//    }
-    
-    
-    
-    
-
     public String getPassword() {
-		return password;
-	}
+        return password;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setActive(boolean isActive) {
-		this.isActive = isActive;
-	}
+    public Long getUserDetailId() {
+        return userDetailId;
+    }
 
-	// Static method to convert entity to DTO
+    public void setUserDetailId(Long userDetailId) {
+        this.userDetailId = userDetailId;
+    }
+
+    public String getVerificationStatus() {
+        return verificationStatus;
+    }
+
+    public void setVerificationStatus(String verificationStatus) {
+        this.verificationStatus = verificationStatus;
+    }
+
+    // ✅ Update `fromEntity` Method
     public static UserLoginDto fromEntity(UserLoginTable userLogin) {
+        User user = userLogin.getUser();
         return new UserLoginDto(
                 userLogin.getUserId(),
                 userLogin.getEmail(),
                 userLogin.getIsActive(),
                 userLogin.getRole(),
                 userLogin.getPassword(),
-                userLogin.getUser() != null ? userLogin.getUser().getFirstName() : null,
-                userLogin.getUser() != null ? userLogin.getUser().getLastName() : null,
-                userLogin.getUser() != null ? userLogin.getUser().getDetailId() : null
+                user != null ? user.getFirstName() : null,
+                user != null ? user.getLastName() : null,
+                user != null ? user.getDetailId() : null,
+                user != null ? user.getVerificationStatus().name(): null // ✅ Convert Enum to String
         );
     }
 }

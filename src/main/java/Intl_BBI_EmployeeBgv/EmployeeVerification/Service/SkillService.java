@@ -26,14 +26,14 @@ public class SkillService {
         return skillRepository.findAll();
     }
 
-    public Skill createSkill(Skill skill) {
-        return skillRepository.save(skill);
+    public Skill createSkill(Skill skills) {
+        return skillRepository.save(skills);
     }
 
-    public Skill updateSkill(Long skillId, Skill skill) {
+    public Skill updateSkill(Long skillId, Skill skills) {
         Skill existingSkill = skillRepository.findById(skillId)
                 .orElseThrow(() -> new RuntimeException("Skill not found"));
-        existingSkill.setSkillName(skill.getSkillName());
+        existingSkill.setSkillName(skills.getSkillName());
         return skillRepository.save(existingSkill);
     }
 
@@ -57,10 +57,44 @@ public class SkillService {
                 .orElseThrow(() -> new RuntimeException("Skill not found"));
 
         user.getSkills().add(skill);  // Ensure `User` entity has `List<Skill>`
+        System.out.println("USER..............."+user);
         userRepository.save(user);
     }
+    
+    
+    
+    public void addSkillsToUser(Long detailId, List<Long> skillIds) {
+        for (Long skillId : skillIds) {
+            addSkillToUser(detailId, skillId);
+        }
+    }
+
 
     public void deleteSkill(Long skillId) {
         skillRepository.deleteById(skillId);
     }
+
+ // Add this new method to SkillService
+//    @Transactional
+//    public void addSkillsToUser(Long detailId, List<String> skillNames) {
+//        User user = userRepository.findById(detailId)
+//                .orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        // Clear existing skills to avoid duplicates
+//        user.getSkills().clear();
+//
+//        for (String skillName : skillNames) {
+//            // Find or create the skill
+//            Skill skill = skillRepository.findBySkillName(skillName)
+//                    .orElseGet(() -> {
+//                        Skill newSkill = new Skill();
+//                        newSkill.setSkillName(skillName);
+//                        return skillRepository.save(newSkill);
+//                    });
+//            
+//            user.getSkills().add(skill);
+//        }
+//
+//        userRepository.save(user);
+//    }
 }

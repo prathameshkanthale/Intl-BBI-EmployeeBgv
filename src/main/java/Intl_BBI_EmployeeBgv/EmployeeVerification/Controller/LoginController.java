@@ -30,10 +30,9 @@ public class LoginController {
 
     // Fetch all users
     @GetMapping("/getUsers")
-    public ResponseEntity<List<UserLoginDto>> fetchUsers() {
-        List<UserLoginDto> users = loginService.fetchUsers().stream().map(UserLoginDto::fromEntity)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(users);
+    public String  fetchUsers() {   	
+        //List<UserLoginTable> users = loginService.fetchUsers();
+        return "ok";
     }
 
     // Update user role and password
@@ -67,6 +66,18 @@ public class LoginController {
             
         }
     }
+    
+    
+    
+    @PatchMapping("/update-details/{userId}")
+    public ResponseEntity<UserLoginTable> updateUserDetails(@PathVariable("userId") Long userId, 
+                                                          @RequestBody Map<String, UserLoginTable> updates) {
+    	UserLoginTable u=updates.get("user");
+        UserLoginTable updatedUser = loginService.updateUserDetails(u);
+        
+        return ResponseEntity.ok(updatedUser); 
+    }
+
     
     @PostMapping("/changePassword/{userId}")
     public ResponseEntity<String> changePassword(
@@ -103,4 +114,17 @@ public class LoginController {
             return ResponseEntity.internalServerError().body("An error occurred: " + e.getMessage());
         }
     }
+    
+    @GetMapping("/getInfo")
+    public ResponseEntity <List<UserLoginTable>> allUserInfo()
+    {
+    	 System.out.println("inside all users");
+    	 return ResponseEntity.ok(loginService.fetchUsers());
+    	 
+    }
+
+
+  
+    
+    
 }

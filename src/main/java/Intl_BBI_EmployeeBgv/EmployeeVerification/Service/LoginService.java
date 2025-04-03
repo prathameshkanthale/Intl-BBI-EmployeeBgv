@@ -1,5 +1,6 @@
 package Intl_BBI_EmployeeBgv.EmployeeVerification.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -138,6 +139,28 @@ public class LoginService<T> {
 
         return true; // Password changed successfully
     }
+    
+    // Get all users info
+    public List<UserLoginTable> allUserInfo() {
+        List<UserLoginTable> users;
+		try {
+			users = userLoginRepository.findAll();
+			System.out.print("Fetched {} users info  from database."+users.size());
+	        return users;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			users=new ArrayList<UserLoginTable>();
+			return users;
+		 
+		}
+        
+    }
+
+	public UserLoginTable updateUserDetails(UserLoginTable u) {
+		userLoginRepository.save(u);
+		return u;
+	}
     
     
     
